@@ -2,12 +2,12 @@
 
 
 function russianRoulette(num)  {
-    return function inner() {
-    num--;
-    if(num < 0) return 'reload to play again';
-    return (num >= 1 ? 'click': "BANG");
-    }
-    }
+             return function inner() {
+                 num--;
+                 if(num < 0) return 'reload to play again';
+                 return (num >= 1 ? 'click': "BANG");
+                }
+            }
     
         const play = russianRoulette(3);
        console.log(play()); // should log: 'click'

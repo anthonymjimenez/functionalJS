@@ -1,173 +1,106 @@
+  
 // /// CLOSURE ####
+// Closure takes advantage of JavaScript's lexical scope to create a Closed Over Variable Enviroment
+// In plain words, a JS function can return another function that has access to the outer functions variables 
+// 
 
-// function addTwo(num) {
-//     console.log(num + 2)
-//     return num + 2
-//   }
-  
-//   const delay = (callback, wait) => {
-//     setTimeout(callback, wait)
-//   }
-//   var delayAddByTwo = (num) => {
-//     delay(() => {addTwo(num)}, 100);
-//   }
-//   console.log(delayAddByTwo)
-//   delayAddByTwo(6)
-
-  
-// const createFunction = () => {
-//     return innerFunction = () => {
-//         console.log("Hello")
-//     }
-// }
-// const function1 = createFunction(); 
-// function1();
-
-// const createFunctionPrinter = (input) => {
-//     return innerFunction = () => {
-//         console.log(input)
-//     }
-// }
-
-//  const printSample = createFunctionPrinter('sample');
-// printSample();
-// const printHello = createFunctionPrinter('hello');
-//  printHello();
-
-//  const addByX = (x) => {
-//     return innerFunc = input => {
-//          return x + input
-//     }
-// }
-//  // Challenge 3
-// const outer = () => {
-//     let counter = 0; // this variable is outside incrementCounter's scope
-//     const incrementCounter = () => {
-//       counter++;
-//       console.log('counter', counter);
-//     }
-//     return incrementCounter;
-//   };
-  
-//   const willCounter = outer();
-//   const jasCounter = outer();
+const outer = () => {
+    let counter = 0; // this variable is outside incrementCounter's scope
+    const incrementCounter = () => {
+      counter++;
+      console.log('counter', counter);
+    }
+    return incrementCounter;
+  };
  
-  
+ const myCounter = outer();
 
-    
-   
-//     const once = (func) => {
-//         var counter = 0;
-//         return callback = (input) => {
-//             if(counter == 0) {
-//                 counter++
-//                 return func(input)
-//             }
-//             else{
-//                 console.log("ERROR")
-//             }
-//         }
-//     }
+// here is an example that uses closure to create parital function declarations
+const addBy = (x) => {
+   return innerFunc = input => {
+       return x + input
+    }
+}
+
+const addBy8 = addBy(8)
+console.log(addBy8(6))
 
 
+// closure is useful for functions that only run under strict conditions 
 
-//     const after = (count, func) => {
-//         let counter = 0;
-//         return innerFunc = (value) => {
-//             if(counter >= count) {
-//                 return func(value)
-//             }
-//             else {
-//                 counter++
-//                 return "counter " + counter
-//             }
-//         }
-//     }
+//example A
 
-
-//     function russianRoulette(num)  {
-//         return function inner() {
-//           if(num > 1) {
-//             num--;
-//            return 'click'
-//           }
-//           else if(num == 1) {
-//             num = 0
-//             return 'bang'
-//         }
-//             else { 
-//             return 'reload to play again'}
-//         }
-//       };
-
-
-//       const play = russianRoulette(5);
-//       console.log(play()); // should log: 'click'
-//       console.log(play()); // should log: 'click'
-//       console.log(play()); // should log: 'bang'
-//       console.log(play()); // should log: 'reload to play again'
-//      console.log(play()); // should log: 'reload to play again'
-
-//      const average = () => {
-//          var sum = 0;
-//          var count = 0
-//          return function innerFunction(num) {
-//              if (num != null) {
-//                 sum += num;
-//                 count++; 
-//              }
-//              return count ? sum / count : 0
-//          }
-//      }
-
-//  const avgSoFar = average();
-//  console.log(avgSoFar()); // should log: 0
-//  console.log(avgSoFar(4)); // should log: 4
-//  console.log(avgSoFar(8)); // should log: 6
-//  console.log(avgSoFar()); // should log: 6
-//  console.log(avgSoFar(12)); // should log: 8
-//  console.log(avgSoFar()); // should log: 8
-
-//  function sOuter() {
-//      var once = 1;
-//      return function inner() {
-//          if(once == 1) {
-//              once++;
-//              return "Successful login ";}
-
-//             else {
-//                 return "You are already logged in!";
-//             }
-//          }
-//      }
+function sOuter() {
+    var once = 0;
+    return function inner() {
+    if(once == 0) {
+        once++;
+        return "Successful login ";}
  
-//      const staceylogin = sOuter()
-//  //
-//      console.log(staceylogin()) 
-//      console.log(staceylogin())
-//      console.log(staceylogin())
+    else {
+        return "You are already logged in!";
+        }
+    }
+ }
 
-  
-     
-     function makeFuncTester(arrayOfTests) {
-         return function(callback) {
-                for(let tuple of arrayOfTests) {
-                    if(callback(tuple[0]) !== tuple[1]) return false
+
+ const anthonylogin = sOuter()
+
+ console.log(anthonylogin()) 
+ console.log(anthonylogin())
+ console.log(anthonylogin())
+
+// example B - more reusable
+
+function post(name) {
+    return `${name} has succesfully posted`
+}
+const once = (func) => {
+   var counter = 0;
+   return callback = (input) => {
+   if(counter == 0) {
+       counter++
+       return func(input)     
+       }
+    else {
+       return "ERROR"
+      }
+    }
+   }
+
+const postOnce = once(post)
+const postAnother = once(post)
+
+console.log(postOnce('Anthony'))
+console.log(postOnce('Anthony'))
+
+console.log(postAnother('Stacey'))
+console.log(postAnother('Stacey'))
+
+
+
+// maybe it can also be useful to delay an action? speculation here
+
+const after = (count, func) => { 
+        let counter = 0;
+        return innerFunc = (value) => {
+            if(counter >= count) {
+                return func(value)
                 }
-                        return true
-                    
-                }
-         }
-     
-     // /*** Uncomment these to check your work! ***/
-     const capLastTestCases = [];
-      capLastTestCases.push(['hello', 'hellO']);
-      capLastTestCases.push(['goodbye', 'goodbyE']);
-     capLastTestCases.push(['howdy', 'howdY']);
-     const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
-     const capLastAttempt1 = str => str.toUpperCase();
-     const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
-     console.log(capLastAttempt2("anthony"))
-     console.log("anthony")
-      console.log(shouldCapitalizeLast(capLastAttempt1)); // should log: false
-      console.log(shouldCapitalizeLast(capLastAttempt2)); // should log: true
+            else {
+                counter++
+                return `${count - counter + 1} turns until action completes`
+           }
+           }
+       }
+       
+
+const add2 = (x) => x + 2
+
+var delayAdd2 = after(3, add2) 
+
+console.log(delayAdd2(7))
+console.log(delayAdd2(7))
+console.log(delayAdd2(7))
+console.log(delayAdd2(7))
+

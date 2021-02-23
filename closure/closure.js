@@ -15,7 +15,7 @@ const outer = () => {
  
  const myCounter = outer();
 
-// here is an example that uses closure to create parital function declarations
+// here is an example that uses closure to create partial function declarations
 const addBy = (x) => {
    return innerFunc = input => {
        return x + input

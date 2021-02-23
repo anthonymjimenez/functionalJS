@@ -43,6 +43,12 @@ const splitOnSpace = split(" "); // you could easily create variations of this f
 
 const splitLine = splitWithArrows("/");
 
+// this sort of composition is common in functional programming
+// if we wrote a function that did everything that arrSplitOnSpace does it would be less
+// reusable and I would argue less readable and more prone to bugs 
+
+// obviously in many situations this is overkill BUT having currying in your 
+// skillset will help you identify moments where this can be very useful
 const arrSplitOnSpace = (arr) => arr.map(splitOnSpace);
 
 console.log(splitOnSpace("Hello children batman"));
@@ -50,3 +56,7 @@ console.log(splitOnSpace("Hello children batman"));
 console.log(arrSplitOnSpace(["Skyrim is never", "going away"]));
 
 console.log(splitLine("I can/I cat"));
+
+// p.s generally speaking the shape of functions really matters in FP
+// most of the time developers want to work with unary or binary functions
+// currying is very useful for achieving this 
